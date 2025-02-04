@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vocabulary Flashcards</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        .hidden { display: none; }
-        .card { border: 1px solid #000; padding: 20px; margin: 20px auto; width: 300px; }
-        .btn { margin: 10px; padding: 10px; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/flashcard.css">
+    <link rel="stylesheet" href="styles/score.css">
 </head>
 <body>
-    <div id="home">
+    <!-- Home Page -->
+    <div id="home" class="container">
         <div class="difficulty-card">
             <h2>Vocabulary Flashcards</h2>
             <div class="difficulty-section">
@@ -28,7 +27,7 @@
                         <input type="text" id="easyEnd" maxlength="1" size="1" placeholder="z">
                     </div>
                 </div>
-    
+
                 <div class="difficulty-row">
                     <div class="difficulty-header">
                         <input type="checkbox" id="medium" value="Medium" onchange="toggleRange('medium')">
@@ -41,7 +40,7 @@
                         <input type="text" id="mediumEnd" maxlength="1" size="1" placeholder="z">
                     </div>
                 </div>
-    
+
                 <div class="difficulty-row">
                     <div class="difficulty-header">
                         <input type="checkbox" id="hard" value="Hard" onchange="toggleRange('hard')">
@@ -54,556 +53,200 @@
                         <input type="text" id="hardEnd" maxlength="1" size="1" placeholder="z">
                     </div>
                 </div>
+
+                <div class="select-all-row">
+                    <input type="checkbox" id="selectAll">
+                    <label for="selectAll">Select All</label>
+                </div>
             </div>
-            <button class="start-btn" onclick="startFlashcards()">Start Flashcards</button>
+            <button id="start-btn" class="start-btn">Start Flashcards</button>
         </div>
     </div>
-    
-    <style>
-        .difficulty-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            max-width: 500px;
-            margin: 2rem auto;
-        }
-    
-        .difficulty-card h2 {
-            color: #333;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-    
-        .difficulty-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-    
-        .difficulty-row {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1rem;
-        }
-    
-        .difficulty-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-    
-        .difficulty-header label {
-            font-size: 1.1rem;
-            color: #444;
-            font-weight: 500;
-        }
-    
-        .range-inputs {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding-left: 1.5rem;
-        }
-    
-        .range-inputs input[type="text"] {
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-    
-        .range-inputs span {
-            color: #666;
-        }
-    
-        .select-all-row {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            margin-top: 0.5rem;
-        }
-    
-        .start-btn {
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 0.8rem 1.5rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1.5rem;
-            transition: background-color 0.2s;
-        }
-    
-        .start-btn:hover {
-            background: #0056b3;
-        }
-    
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-    
-        label {
-            cursor: pointer;
-        }
-    
-        .hidden {
-            display: none;
-        }
-    </style>   
-<div id="flashcard" class="hidden">
-    <div class="flashcard-container">
-        <div class="card-outer">
-            <div class="progress-bar">
-                <div class="difficulty-badge"></div>
-            </div>
-            
-            <div class="card-content">
-                <h2 id="word"></h2>
-                <h4 id="partOfSpeech"></h4>
-                <div id="definition" class="definition hidden">
-                    <div class="definition-divider"></div>
-                    <p></p>
+
+    <!-- Flashcard View -->
+    <div id="flashcard" class="hidden container">
+        <div class="flashcard-container">
+            <div class="card-outer">
+                <div class="progress-bar">
+                    <div id="difficulty-badge" class="difficulty-badge"></div>
                 </div>
                 
-                <button class="show-meaning-btn" onclick="showMeaning()">
-                    Show Definition
-                </button>
+                <div class="card-content">
+                    <h2 id="word"></h2>
+                    <h4 id="partOfSpeech"></h4>
+                    <div id="definition" class="definition hidden">
+                        <div class="definition-divider"></div>
+                        <p></p>
+                    </div>
+                    
+                    <button id="show-meaning-btn" class="show-meaning-btn">
+                        Show Definition
+                    </button>
+                </div>
+                
+                <div class="response-buttons">
+                    <button id="dont-know-btn" class="response-btn incorrect">
+                        I Don't Know
+                    </button>
+                    <button id="know-btn" class="response-btn correct">
+                        I Know This
+                    </button>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button id="prev-btn" class="nav-btn">Previous</button>
+                <button id="end-quiz-btn" class="nav-btn danger">End Quiz</button>
+                <button id="next-btn" class="nav-btn">Next</button>
             </div>
             
-            <div class="response-buttons">
-                <button class="response-btn incorrect" onclick="markAnswer(false)">
-                    I Don't Know
-                </button>
-                <button class="response-btn correct" onclick="markAnswer(true)">
-                    I Know This
-                </button>
-            </div>
+            <button id="home-btn" class="home-btn">Back to Home</button>
         </div>
-
-        <div class="navigation-buttons">
-            <button class="nav-btn" onclick="prevWord()">Previous</button>
-            <button class="nav-btn danger" onclick="endQuiz()">End Quiz</button>
-            <button class="nav-btn" onclick="nextWord()">Next</button>
-        </div>
-        
-        <button class="home-btn" onclick="goHome()">Back to Home</button>
     </div>
-</div>
 
-<div id="scoreScreen" class="hidden">
-    <div class="score-card">
-        <h2>Quiz Complete! 🎉</h2>
-        <div class="score-content">
-            <p id="score"></p>
-            <div class="score-buttons">
-                <button class="retry-btn" onclick="retryIncorrect()">Retry Incorrect Words</button>
-                <button class="home-btn" onclick="goHome()">Back to Home</button>
+    <!-- Score Screen -->
+    <div id="scoreScreen" class="hidden container">
+        <div class="score-card">
+            <h2>Quiz Complete! 🎉</h2>
+            <div class="score-content">
+                <p id="score"></p>
+                <div class="score-buttons">
+                    <button id="retry-incorrect-btn" class="retry-btn">Retry Incorrect Words</button>
+                    <button id="score-home-btn" class="home-btn">Back to Home</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    .flashcard-container {
-        max-width: 600px;
-        margin: 2rem auto;
-        padding: 0 1rem;
-    }
-
-    .card-outer {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        position: relative;
-        transition: transform 0.2s;
-    }
-
-    .card-outer:hover {
-        transform: translateY(-2px);
-    }
-
-    .progress-bar {
-        background: #f8f9fa;
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .difficulty-badge {
-        font-size: 0.875rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 12px;
-        background: #e9ecef;
-        color: #495057;
-    }
-
-    .card-content {
-        padding: 2rem;
-        text-align: center;
-    }
-
-    .card-content h2 {
-        font-size: 2.5rem;
-        color: #333;
-        margin: 0 0 0.5rem 0;
-    }
-
-    .card-content h4 {
-        font-size: 1.1rem;
-        color: #666;
-        margin: 0;
-        font-weight: normal;
-    }
-
-    .definition {
-        margin-top: 2rem;
-    }
-
-    .definition-divider {
-        height: 1px;
-        background: #e9ecef;
-        margin: 1rem auto;
-        width: 80%;
-    }
-
-    .definition p {
-        color: #495057;
-        font-size: 1.2rem;
-        margin: 1rem 0;
-    }
-
-    .show-meaning-btn {
-        background: #fff;
-        border: 2px solid #007bff;
-        color: #007bff;
-        padding: 0.8rem 1.5rem;
-        border-radius: 6px;
-        font-size: 1rem;
-        cursor: pointer;
-        margin: 1.5rem 0;
-        transition: all 0.2s;
-    }
-
-    .show-meaning-btn:hover {
-        background: #007bff;
-        color: white;
-    }
-
-    .response-buttons {
-        display: flex;
-        gap: 1rem;
-        padding: 1.5rem;
-        background: #f8f9fa;
-        border-top: 1px solid #eee;
-    }
-
-    .response-btn {
-        flex: 1;
-        padding: 1rem;
-        border: none;
-        border-radius: 6px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .response-btn.correct {
-        background: #28a745;
-        color: white;
-    }
-
-    .response-btn.correct:hover {
-        background: #218838;
-    }
-
-    .response-btn.incorrect {
-        background: #dc3545;
-        color: white;
-    }
-
-    .response-btn.incorrect:hover {
-        background: #c82333;
-    }
-
-    .navigation-buttons {
-        display: flex;
-        gap: 1rem;
-        margin: 1.5rem 0;
-        justify-content: center;
-    }
-
-    .nav-btn {
-        padding: 0.6rem 1.2rem;
-        border: 1px solid #dee2e6;
-        background: white;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .nav-btn:hover {
-        background: #f8f9fa;
-    }
-
-    .nav-btn.danger {
-        background: #dc3545;
-        border-color: #dc3545;
-        color: white;
-    }
-
-    .nav-btn.danger:hover {
-        background: #c82333;
-    }
-
-    .home-btn {
-        width: 100%;
-        padding: 0.8rem;
-        background: #6c757d;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .home-btn:hover {
-        background: #5a6268;
-    }
-
-    /* Score Screen Styles */
-    .score-card {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        padding: 2rem;
-        max-width: 500px;
-        margin: 2rem auto;
-        text-align: center;
-    }
-
-    .score-card h2 {
-        color: #333;
-        margin-bottom: 1.5rem;
-    }
-
-    .score-content {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .score-content p {
-        font-size: 1.2rem;
-        color: #495057;
-    }
-
-    .score-buttons {
-        display: flex;
-        gap: 1rem;
-        flex-direction: column;
-    }
-
-    .retry-btn {
-        background: #28a745;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 0.8rem;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .retry-btn:hover {
-        background: #218838;
-    }
-
-    .hidden {
-        display: none;
-    }
-</style>
-
-
-    <div id="scoreScreen" class="hidden">
-        <h2>Quiz Complete!</h2>
-        <p id="score"></p>
-        <button class="btn" onclick="retryIncorrect()">Retry Incorrect Words</button>
-        <button class="btn" onclick="goHome()">Back to Home</button>
-    </div>
-
+    <!-- Modular JavaScript -->
+    <script src="scripts/csv-loader.js"></script>
+    <script src="scripts/flashcard-manager.js"></script>
+    <script src="scripts/ui-manager.js"></script>
     <script>
-// This will store our words after loading
-        let words = [];  // This will store our words after loading
-
-        async function loadWordsFromCSV() {
-            try {
-                const response = await fetch('vocab_output.csv');
-                const csvText = await response.text();
-
-                // Split the CSV into lines and remove the header
-                const lines = csvText.split('\n');
-                const header = lines.shift();  // Remove and store header line
-
-                // Parse each line into a word object
-                words = lines
-                    .filter(line => line.trim() !== '')  // Remove empty lines
-                    .map(line => {
-                        // First get the word, part of speech, and difficulty which we know won't have commas
-                        const firstCommaIndex = line.indexOf(',');
-                        const word = line.slice(0, firstCommaIndex).trim();
-
-                        const restOfLine = line.slice(firstCommaIndex + 1);
-                        const secondCommaIndex = restOfLine.indexOf(',');
-                        const partOfSpeech = restOfLine.slice(0, secondCommaIndex).trim();
-
-                        const remainingText = restOfLine.slice(secondCommaIndex + 1);
-                        const lastCommaIndex = remainingText.lastIndexOf(',');
-
-                        // The definition is everything between the second comma and the last comma
-                        const definition = remainingText.slice(0, lastCommaIndex).trim();
-                        const difficulty = remainingText.slice(lastCommaIndex + 1).trim();
-                    
-                        return {
-                            word,
-                            partOfSpeech: `(${partOfSpeech})`,  // Format part of speech with parentheses
-                            definition,
-                            difficulty
-                        };
-                    });
-
-                console.log(`Loaded ${words.length} words successfully`);
-            } catch (error) {
-                console.error('Error loading vocabulary:', error);
-                alert('Error loading vocabulary. Please try again later.');
-            }
-        }   
-        let filteredWords = [];
-        let incorrectWords = [];
-        let currentIndex = 0;
-        let correctAnswers = 0;
-        let totalAnswered = 0;
-
-        function toggleRange(difficulty) {
-            document.getElementById(difficulty + 'Range').classList.toggle('hidden', !document.getElementById(difficulty).checked);
-        }
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Load words from CSV
+        const words = await VocabularyLoader.loadWordsFromCSV();
         
-        async function startFlashcards() {
-        // If words haven't been loaded yet, load them
-        if (words.length === 0) {
-            await loadWordsFromCSV();
+        // Initialize managers
+        const flashcardManager = new FlashcardManager(words);
+        
+        // Toggle range visibility
+        function toggleRange(difficulty) {
+            document.getElementById(`${difficulty}Range`).classList.toggle('hidden', !document.getElementById(difficulty).checked);
         }
 
-        filteredWords = [];
-        incorrectWords = [];
-        correctAnswers = 0;
-        totalAnswered = 0;
+        // Attach toggle range to checkboxes
+        ['easy', 'medium', 'hard'].forEach(diff => {
+            document.getElementById(diff).addEventListener('change', () => toggleRange(diff));
+        });
 
-        ["Easy", "Medium", "Hard"].forEach(difficulty => {
-            if (document.getElementById(difficulty.toLowerCase()).checked) {
-                const startLetter = document.getElementById(difficulty.toLowerCase() + 'Start').value.toLowerCase();
-                const endLetter = document.getElementById(difficulty.toLowerCase() + 'End').value.toLowerCase() || startLetter;
+        // Start button
+        document.getElementById('start-btn').addEventListener('click', () => {
+            const selectedDifficulties = [];
+            const startLetters = {};
+            const endLetters = {};
+            
+            ['easy', 'medium', 'hard'].forEach(diff => {
+                if (document.getElementById(diff).checked) {
+                    const difficulty = diff.charAt(0).toUpperCase() + diff.slice(1);
+                    selectedDifficulties.push(difficulty);
+                    startLetters[difficulty] = document.getElementById(`${diff}Start`).value || 'a';
+                    endLetters[difficulty] = document.getElementById(`${diff}End`).value || 'z';
+                }
+            });
+            
+            flashcardManager.filterWords(selectedDifficulties, startLetters, endLetters);
+            
+            if (flashcardManager.filteredWords.length > 0) {
+                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                document.getElementById('home').classList.add('hidden');
+                document.getElementById('flashcard').classList.remove('hidden');
+            } else {
+                alert('No words found for the selected criteria.');
+            }
+        });
+        
+        // Show meaning button
+        document.getElementById('show-meaning-btn').addEventListener('click', () => {
+            document.getElementById('definition').classList.toggle('hidden');
+            const button = document.querySelector('.show-meaning-btn');
+            if (document.getElementById('definition').classList.contains('hidden')) {
+                button.textContent = 'Show Definition';
+            } else {
+                button.textContent = 'Hide Definition';
+            }
+        });
+        
+        // Know/Don't Know buttons
+        document.getElementById('know-btn').addEventListener('click', () => {
+            flashcardManager.markAnswer(true);
+            advanceToNextWord();
+        });
+        
+        document.getElementById('dont-know-btn').addEventListener('click', () => {
+            flashcardManager.markAnswer(false);
+            advanceToNextWord();
+        });
 
-                filteredWords = filteredWords.concat(
-                    words.filter(w => w.difficulty.trim() === difficulty &&
-                        w.word.toLowerCase()[0] >= startLetter && w.word.toLowerCase()[0] <= endLetter)
-                );
+        // Next/Previous buttons
+        document.getElementById('next-btn').addEventListener('click', advanceToNextWord);
+        document.getElementById('prev-btn').addEventListener('click', goToPreviousWord);
+
+        // End quiz button
+        document.getElementById('end-quiz-btn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to end the quiz?')) {
+                showFinalScore();
             }
         });
 
-        filteredWords = filteredWords.sort(() => Math.random() - 0.5);
+        // Home buttons
+        document.getElementById('home-btn').addEventListener('click', UIManager.showHome);
+        document.getElementById('score-home-btn').addEventListener('click', UIManager.showHome);
 
-        if (filteredWords.length > 0) {
-            currentIndex = 0;
-            showFlashcard();
-            document.getElementById('home').classList.add('hidden');
-            document.getElementById('flashcard').classList.remove('hidden');
-        } else {
-            alert('No words found for the selected criteria.');
-        }
-}   
+        // Retry incorrect words
+        document.getElementById('retry-incorrect-btn').addEventListener('click', retryIncorrectWords);
 
-            document.addEventListener('DOMContentLoaded', loadWordsFromCSV);
-            function showFlashcard() {
-                if (filteredWords.length === 0) return;
-                const word = filteredWords[currentIndex];
-                document.querySelector('.show-meaning-btn').textContent = 'Show Definition'
-                document.getElementById('word').innerText = word.word;
-                document.getElementById('partOfSpeech').innerText = word.partOfSpeech;
-                document.querySelector('.difficulty-badge').innerText = word.difficulty;
-                document.querySelector('#definition p').innerText = word.definition;
-                document.getElementById('definition').classList.add('hidden');
-            }
-
-            function showMeaning() {
-        const definitionElement = document.getElementById('definition');
-        definitionElement.classList.toggle('hidden');
-            
-        // Also update the button text based on visibility
-        const button = document.querySelector('.show-meaning-btn');
-        if (definitionElement.classList.contains('hidden')) {
-            button.textContent = 'Show Definition';
-        } else {
-            button.textContent = 'Hide Definition';
-        }
-}   
-
-        function markAnswer(correct) {
-            totalAnswered++;
-            if (!correct) {
-                incorrectWords.push(filteredWords[currentIndex]);
+        function advanceToNextWord() {
+            if (flashcardManager.currentIndex < flashcardManager.filteredWords.length - 1) {
+                flashcardManager.currentIndex++;
+                UIManager.showFlashcard(flashcardManager.getCurrentWord());
             } else {
-                correctAnswers++;
-            }
-            nextWord();
-        }
-        
-        function nextWord() {
-            if (currentIndex < filteredWords.length - 1) {
-                currentIndex++;
-                showFlashcard();
-            } else {
-                showScore();
+                showFinalScore();
             }
         }
-        
-        function showScore() {
+
+        function goToPreviousWord() {
+            if (flashcardManager.currentIndex > 0) {
+                flashcardManager.currentIndex--;
+                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+            }
+        }
+
+        function showFinalScore() {
+            UIManager.showScore(
+                flashcardManager.correctAnswers, 
+                flashcardManager.totalAnswered
+            );
             document.getElementById('flashcard').classList.add('hidden');
-            document.getElementById('score').innerText = `You got ${correctAnswers} out of ${totalAnswered} correct.`;
             document.getElementById('scoreScreen').classList.remove('hidden');
         }
-        function goHome() {
-            document.getElementById('flashcard').classList.add('hidden');
-            document.getElementById('scoreScreen').classList.add('hidden');
-            document.getElementById('home').classList.remove('hidden');
-        }
 
-        function retryIncorrect() {
-            if (incorrectWords.length > 0) {
-                totalAnswered = 0;
-                correctAnswers = 0;
-                filteredWords = incorrectWords;
-                incorrectWords = [];
-                currentIndex = 0;
-                showFlashcard();
+        function retryIncorrectWords() {
+            if (flashcardManager.incorrectWords.length > 0) {
+                flashcardManager.filteredWords = flashcardManager.incorrectWords;
+                flashcardManager.incorrectWords = [];
+                flashcardManager.currentIndex = 0;
+                flashcardManager.correctAnswers = 0;
+                flashcardManager.totalAnswered = 0;
+
+                UIManager.showFlashcard(flashcardManager.getCurrentWord());
                 document.getElementById('scoreScreen').classList.add('hidden');
                 document.getElementById('flashcard').classList.remove('hidden');
+            } else {
+                alert('No incorrect words to retry.');
             }
         }
-        function endQuiz() {
-            if (confirm("Are you sure you want to end the quiz?")) {
-                showScore();
-            }
-        }
+    });
     </script>
 </body>
 </html>

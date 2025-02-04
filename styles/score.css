@@ -1,0 +1,49 @@
+.score-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.score-card h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.score-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.score-content p {
+    font-size: 1.2rem;
+    color: #495057;
+}
+
+.score-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.retry-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.retry-btn:hover {
+    background: #218838;
+}
+
+.hidden {
+    display: none;
+}

@@ -42,12 +42,14 @@
             <p id="definition" class="hidden"></p>
             <button class="btn" onclick="showMeaning()">See Meaning</button>
             <br>
+            <h5> Did you get it?</h5>
             <button class="btn" onclick="markAnswer(true)">Yes</button>
             <button class="btn" onclick="markAnswer(false)">No</button>
         </div>
         <button class="btn" onclick="prevWord()">Previous</button>
         <button class="btn" onclick="nextWord()">Next</button>
         <button class="btn" onclick="goHome()">Back to Home</button>
+        <button class="btn" onclick="endQuiz()">End Quiz</button>
     </div>
 
     <div id="scoreScreen" class="hidden">
@@ -115,6 +117,7 @@
         let incorrectWords = [];
         let currentIndex = 0;
         let correctAnswers = 0;
+        let totalAnswered = 0;
 
         function toggleRange(difficulty) {
             document.getElementById(difficulty + 'Range').classList.toggle('hidden', !document.getElementById(difficulty).checked);
@@ -124,6 +127,7 @@
             filteredWords = [];
             incorrectWords = [];
             correctAnswers = 0;
+            totalAnswered = 0;
             
             ["Easy", "Medium", "Hard"].forEach(difficulty => {
                 if (document.getElementById(difficulty.toLowerCase()).checked) {
@@ -164,6 +168,7 @@
         }
         
         function markAnswer(correct) {
+            totalAnswered++;
             if (!correct) {
                 incorrectWords.push(filteredWords[currentIndex]);
             } else {
@@ -183,7 +188,7 @@
         
         function showScore() {
             document.getElementById('flashcard').classList.add('hidden');
-            document.getElementById('score').innerText = `You got ${correctAnswers} out of ${filteredWords.length} correct.`;
+            document.getElementById('score').innerText = `You got ${correctAnswers} out of ${totalAnswered} correct.`;
             document.getElementById('scoreScreen').classList.remove('hidden');
         }
         function goHome() {
@@ -201,6 +206,11 @@
                 showFlashcard();
                 document.getElementById('scoreScreen').classList.add('hidden');
                 document.getElementById('flashcard').classList.remove('hidden');
+            }
+        }
+        function endQuiz() {
+            if (confirm("Are you sure you want to end the quiz?")) {
+                showScore();
             }
         }
     </script>

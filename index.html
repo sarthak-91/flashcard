@@ -14,13 +14,22 @@
 <body>
     <div id="home">
         <h2>Select Difficulty</h2>
-        <input type="checkbox" id="easy" value="Easy"> Easy
-        <input type="checkbox" id="medium" value="Medium"> Medium
-        <input type="checkbox" id="hard" value="Hard"> Hard
+        <input type="checkbox" id="easy" value="Easy" onchange="toggleRange('easy')"> Easy
+        <div id="easyRange" class="hidden">
+            <input type="text" id="easyStart" maxlength="1" size="1"> to 
+            <input type="text" id="easyEnd" maxlength="1" size="1">
+        </div>
+        <input type="checkbox" id="medium" value="Medium" onchange="toggleRange('medium')"> Medium
+        <div id="mediumRange" class="hidden">
+            <input type="text" id="mediumStart" maxlength="1" size="1"> to 
+            <input type="text" id="mediumEnd" maxlength="1" size="1">
+        </div>
+        <input type="checkbox" id="hard" value="Hard" onchange="toggleRange('hard')"> Hard
+        <div id="hardRange" class="hidden">
+            <input type="text" id="hardStart" maxlength="1" size="1"> to 
+            <input type="text" id="hardEnd" maxlength="1" size="1">
+        </div>
         <input type="checkbox" id="selectAll"> Select All
-        <h2>Select Letter Range</h2>
-        <input type="text" id="letterStart" maxlength="1" size="1"> to 
-        <input type="text" id="letterEnd" maxlength="1" size="1">
         <br><br>
         <button class="btn" onclick="startFlashcards()">Start</button>
     </div>
@@ -41,25 +50,33 @@
         let words = [
             { word: "abhorrent", partOfSpeech: "(adj.)", definition: "worthy of hatred and disgust", difficulty: "Easy" },
             { word: "abridge", partOfSpeech: "(v.)", definition: "to shorten", difficulty: "Easy" },
-            { word: "abstain", partOfSpeech: "(v.)", definition: "to keep oneself from doing or having something", difficulty: "Easy" },
-            { word: "abstract", partOfSpeech: "(adj.)", definition: "relating to ideas rather than something physical or concrete", difficulty: "Easy" },
-            { word: "abundant", partOfSpeech: "(adj.)", definition: "existing in large quantities", difficulty: "Easy" }
+            { word: "abstain", partOfSpeech: "(v.)", definition: "to keep oneself from doing or having something", difficulty: "Hard" },
+            { word: "abstract", partOfSpeech: "(adj.)", definition: "relating to ideas rather than something physical or concrete", difficulty: "Hard" },
+            { word: "abundant", partOfSpeech: "(adj.)", definition: "existing in large quantities", difficulty: "Medium" }
         ];
         
         let filteredWords = [];
         let currentIndex = 0;
         
+        function toggleRange(difficulty) {
+            document.getElementById(difficulty + 'Range').classList.toggle('hidden', !document.getElementById(difficulty).checked);
+        }
+        
         function startFlashcards() {
-            const difficulties = [];
-            if (document.getElementById('easy').checked) difficulties.push('Easy');
-            if (document.getElementById('medium').checked) difficulties.push('Medium');
-            if (document.getElementById('hard').checked) difficulties.push('Hard');
+            filteredWords = [];
+            const difficulties = ["Easy", "Medium", "Hard"];
             
-            const startLetter = document.getElementById('letterStart').value.toLowerCase();
-            const endLetter = document.getElementById('letterEnd').value.toLowerCase() || startLetter;
-            
-            filteredWords = words.filter(w => difficulties.includes(w.difficulty.trim()) &&
-                w.word.toLowerCase()[0] >= startLetter && w.word.toLowerCase()[0] <= endLetter);
+            difficulties.forEach(difficulty => {
+                if (document.getElementById(difficulty.toLowerCase()).checked) {
+                    const startLetter = document.getElementById(difficulty.toLowerCase() + 'Start').value.toLowerCase();
+                    const endLetter = document.getElementById(difficulty.toLowerCase() + 'End').value.toLowerCase() || startLetter;
+                    
+                    filteredWords = filteredWords.concat(
+                        words.filter(w => w.difficulty.trim() === difficulty &&
+                            w.word.toLowerCase()[0] >= startLetter && w.word.toLowerCase()[0] <= endLetter)
+                    );
+                }
+            });
             
             filteredWords = filteredWords.sort(() => Math.random() - 0.5);
             
@@ -109,6 +126,9 @@
             document.getElementById('easy').checked = this.checked;
             document.getElementById('medium').checked = this.checked;
             document.getElementById('hard').checked = this.checked;
+            toggleRange('easy');
+            toggleRange('medium');
+            toggleRange('hard');
         });
     </script>
 </body>

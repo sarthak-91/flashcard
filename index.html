@@ -546,8 +546,17 @@
         }
 
         function showMeaning() {
-            document.getElementById('definition').classList.remove('hidden');
-        }
+    const definitionElement = document.getElementById('definition');
+    definitionElement.classList.toggle('hidden');
+    
+    // Also update the button text based on visibility
+    const button = document.querySelector('.show-meaning-btn');
+    if (definitionElement.classList.contains('hidden')) {
+        button.textContent = 'Show Definition';
+    } else {
+        button.textContent = 'Hide Definition';
+    }
+}
         
         function markAnswer(correct) {
             totalAnswered++;
@@ -582,6 +591,7 @@
         function retryIncorrect() {
             if (incorrectWords.length > 0) {
                 correctAnswers = 0;
+                totalAnswered = 0;
                 filteredWords = incorrectWords;
                 incorrectWords = [];
                 currentIndex = 0;

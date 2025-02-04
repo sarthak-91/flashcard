@@ -38,35 +38,94 @@
         <div class="card">
             <h2 id="word"></h2>
             <h4 id="partOfSpeech"></h4>
+            <h5 id="difficulty"></h5>
             <p id="definition" class="hidden"></p>
             <button class="btn" onclick="showMeaning()">See Meaning</button>
+            <br>
+            <button class="btn" onclick="markAnswer(true)">Yes</button>
+            <button class="btn" onclick="markAnswer(false)">No</button>
         </div>
         <button class="btn" onclick="prevWord()">Previous</button>
         <button class="btn" onclick="nextWord()">Next</button>
         <button class="btn" onclick="goHome()">Back to Home</button>
     </div>
 
+    <div id="scoreScreen" class="hidden">
+        <h2>Quiz Complete!</h2>
+        <p id="score"></p>
+        <button class="btn" onclick="retryIncorrect()">Retry Incorrect Words</button>
+        <button class="btn" onclick="goHome()">Back to Home</button>
+    </div>
+
     <script>
         let words = [
-            { word: "abhorrent", partOfSpeech: "(adj.)", definition: "worthy of hatred and disgust", difficulty: "Easy" },
-            { word: "abridge", partOfSpeech: "(v.)", definition: "to shorten", difficulty: "Easy" },
-            { word: "abstain", partOfSpeech: "(v.)", definition: "to keep oneself from doing or having something", difficulty: "Hard" },
-            { word: "abstract", partOfSpeech: "(adj.)", definition: "relating to ideas rather than something physical or concrete", difficulty: "Hard" },
-            { word: "abundant", partOfSpeech: "(adj.)", definition: "existing in large quantities", difficulty: "Medium" }
+        { word: 'uptick', partOfSpeech: '(n.)', definition: 'a small increase', difficulty: 'Easy'  },
+{ word: 'novice', partOfSpeech: '(n.)', definition: 'a beginner', difficulty: 'Easy'  },
+{ word: 'seldom', partOfSpeech: '(adv.)', definition: 'rarely', difficulty: 'Easy'  },
+{ word: 'canonize', partOfSpeech: '(v.)', definition: 'to regard as among the most accomplished and important works (of literature, etc.)', difficulty: 'Hard'  },
+{ word: 'covert', partOfSpeech: '(adj.)', definition: 'secret', difficulty: 'Easy'  },
+{ word: 'esteemed', partOfSpeech: '(adj.)', definition: 'respected and admired', difficulty: 'Easy'  },
+{ word: 'opulence', partOfSpeech: '(n.)', definition: 'great wealth or extravagance', difficulty: 'Easy'  },
+{ word: 'crass', partOfSpeech: '(adj.)', definition: 'undigniﬁed or vulgar', difficulty: 'Easy'  },
+{ word: 'chicanery', partOfSpeech: '(n.)', definition: 'trickery, esp. in politics or ﬁnance', difficulty: 'Hard'  },
+{ word: 'animosity', partOfSpeech: '(n.)', definition: 'strong dislike, hatred', difficulty: 'Easy'  },
+{ word: 'raconteur', partOfSpeech: '(n.)', definition: 'a skilled storyteller', difficulty: 'Hard'  },
+{ word: 'quiescent', partOfSpeech: '(adj.)', definition: 'inactive, at rest', difficulty: 'Hard'  },
+{ word: 'apostate', partOfSpeech: '(n.)', definition: 'a person who abandons a religion, political party, cause, etc.', difficulty: 'Hard'  },
+{ word: 'diplomacy', partOfSpeech: '(n.)', definition: 'the profession or activity of conducting negotiations or maintaining good relations between countries; skill in dealing with people without causing oense or upset', difficulty: 'Easy'  },
+{ word: 'decree', partOfSpeech: '(v.)', definition: 'to order, to command', difficulty: 'Easy'  },
+{ word: 'scarce', partOfSpeech: '(adj.)', definition: 'not plentiful, lacking', difficulty: 'Easy'  },
+{ word: 'perennial', partOfSpeech: '(adj.)', definition: 'continual or recurring', difficulty: 'Easy'  },
+{ word: 'stalwart', partOfSpeech: '(adj.)', definition: 'loyal and dependable; strong and sturdy', difficulty: 'Hard'  },
+{ word: 'exotic', partOfSpeech: '(adj.)', definition: 'from a foreign land; dierent or unusual in an interesting or mysterious way', difficulty: 'Easy'  },
+{ word: 'mollify', partOfSpeech: '(v.)', definition: 'to make (someone) less angry or upset; to make less severe', difficulty: 'Medium'  },
+{ word: 'visionary', partOfSpeech: '(n.)', definition: 'a person who thinks about the future in an imaginative and insightful way', difficulty: 'Easy'  },
+{ word: 'purport', partOfSpeech: '(v.)', definition: 'to appear or claim to be or do something, esp. falsely', difficulty: 'Medium'  },
+{ word: 'overstate', partOfSpeech: '(v.)', definition: 'to exaggerate', difficulty: 'Easy'  },
+{ word: 'affectation', partOfSpeech: '(n.)', definition: 'behavior that is unnatural to oneself, esp. to impress others', difficulty: 'Medium'  },
+{ word: 'contrite', partOfSpeech: '(adj.)', definition: 'remorseful', difficulty: 'Medium'  },
+{ word: 'enthrall', partOfSpeech: '(v.)', definition: 'to completely hold the attention of', difficulty: 'Easy'  },
+{ word: 'triﬂing', partOfSpeech: '(adj.)', definition: 'insigniﬁcant, unimportant, of little value', difficulty: 'Medium'  },
+{ word: 'underhanded', partOfSpeech: '(adj.)', definition: 'acting or done in a secret and dishonest way; sneaky', difficulty: 'Easy'  },
+{ word: 'obfuscate', partOfSpeech: '(v.)', definition: 'to make unclear, to make confusing', difficulty: 'Hard'  },
+{ word: 'relegate', partOfSpeech: '(v.)', definition: 'to assign to an inferior or insigniﬁcant position, place, etc.', difficulty: 'Hard'  },
+{ word: 'condone', partOfSpeech: '(v.)', definition: 'to allow, accept, or approve of something considered wrong', difficulty: 'Easy'  },
+{ word: 'grave', partOfSpeech: '(adj.)', definition: 'very serious', difficulty: 'Medium'  },
+{ word: 'mordant', partOfSpeech: '(adj.)', definition: 'sharply critical, esp. in a humorous way', difficulty: 'Hard'  },
+{ word: 'curtail', partOfSpeech: '(v.)', definition: 'to restrict or cut back, to reduce', difficulty: 'Easy'  },
+{ word: 'tirade', partOfSpeech: '(n.)', definition: 'a long, angry speech', difficulty: 'Easy'  },
+{ word: 'plastic', partOfSpeech: '(adj.)', definition: 'easily shapable', difficulty: 'Medium'  },
+{ word: 'banality', partOfSpeech: '(n.)', definition: 'the quality of being boring, ordinary, and not original; something boring, ordinary, and unoriginal', difficulty: 'Easy'  },
+{ word: 'terse', partOfSpeech: '(adj.)', definition: 'using few words, esp. to the point of rudeness', difficulty: 'Easy'  },
+{ word: 'trappings', partOfSpeech: '(n.)', definition: 'the visible signs of something; the objects, possessions, or features typically associated with a situation, role, etc.', difficulty: 'Hard'  },
+{ word: 'emulate', partOfSpeech: '(v.)', definition: 'to imitate', difficulty: 'Medium'  },
+{ word: 'verbosity', partOfSpeech: '(n.)', definition: 'wordiness', difficulty: 'Easy'  },
+{ word: 'pacify', partOfSpeech: '(v.)', definition: 'to make peaceful, to calm', difficulty: 'Easy'  },
+{ word: 'venerable', partOfSpeech: '(adj.)', definition: 'worthy of respect because of age, character, position, etc.', difficulty: 'Medium'  },
+{ word: 'alarming', partOfSpeech: '(adj.)', definition: 'worrying, troubling', difficulty: 'Easy'  },
+{ word: 'stoic', partOfSpeech: '(adj.)', definition: 'not complaining or showing feelings, accepting events without emotion', difficulty: 'Medium'  },
+{ word: 'volatile', partOfSpeech: '(adj.)', definition: 'explosive or unstable, given to sudden or extreme changes', difficulty: 'Easy'  },
+{ word: 'oust', partOfSpeech: '(v.)', definition: 'to force someone out of a position or place', difficulty: 'Easy'  },
+{ word: 'virtuoso', partOfSpeech: '(adj.)', definition: 'highly skilled, masterful', difficulty: 'Medium'  },
+{ word: 'intelligible', partOfSpeech: '(adj.)', definition: 'understandable', difficulty: 'Hard'  },
+{ word: 'culminate', partOfSpeech: '(v.)', definition: 'to reach the highest point or end, to result (in something)', difficulty: 'Easy'  }
         ];
         
         let filteredWords = [];
+        let incorrectWords = [];
         let currentIndex = 0;
-        
+        let correctAnswers = 0;
+
         function toggleRange(difficulty) {
             document.getElementById(difficulty + 'Range').classList.toggle('hidden', !document.getElementById(difficulty).checked);
         }
         
         function startFlashcards() {
             filteredWords = [];
-            const difficulties = ["Easy", "Medium", "Hard"];
+            incorrectWords = [];
+            correctAnswers = 0;
             
-            difficulties.forEach(difficulty => {
+            ["Easy", "Medium", "Hard"].forEach(difficulty => {
                 if (document.getElementById(difficulty.toLowerCase()).checked) {
                     const startLetter = document.getElementById(difficulty.toLowerCase() + 'Start').value.toLowerCase();
                     const endLetter = document.getElementById(difficulty.toLowerCase() + 'End').value.toLowerCase() || startLetter;
@@ -95,6 +154,7 @@
             const word = filteredWords[currentIndex];
             document.getElementById('word').innerText = word.word;
             document.getElementById('partOfSpeech').innerText = word.partOfSpeech;
+            document.getElementById('difficulty').innerText = "Difficulty: " + word.difficulty;
             document.getElementById('definition').innerText = word.definition;
             document.getElementById('definition').classList.add('hidden');
         }
@@ -103,33 +163,46 @@
             document.getElementById('definition').classList.remove('hidden');
         }
         
+        function markAnswer(correct) {
+            if (!correct) {
+                incorrectWords.push(filteredWords[currentIndex]);
+            } else {
+                correctAnswers++;
+            }
+            nextWord();
+        }
+        
         function nextWord() {
             if (currentIndex < filteredWords.length - 1) {
                 currentIndex++;
                 showFlashcard();
+            } else {
+                showScore();
             }
         }
         
-        function prevWord() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                showFlashcard();
-            }
+        function showScore() {
+            document.getElementById('flashcard').classList.add('hidden');
+            document.getElementById('score').innerText = `You got ${correctAnswers} out of ${filteredWords.length} correct.`;
+            document.getElementById('scoreScreen').classList.remove('hidden');
         }
-        
         function goHome() {
             document.getElementById('flashcard').classList.add('hidden');
+            document.getElementById('scoreScreen').classList.add('hidden');
             document.getElementById('home').classList.remove('hidden');
         }
-        
-        document.getElementById('selectAll').addEventListener('change', function() {
-            document.getElementById('easy').checked = this.checked;
-            document.getElementById('medium').checked = this.checked;
-            document.getElementById('hard').checked = this.checked;
-            toggleRange('easy');
-            toggleRange('medium');
-            toggleRange('hard');
-        });
+
+        function retryIncorrect() {
+            if (incorrectWords.length > 0) {
+                correctAnswers = 0;
+                filteredWords = incorrectWords;
+                incorrectWords = [];
+                currentIndex = 0;
+                showFlashcard();
+                document.getElementById('scoreScreen').classList.add('hidden');
+                document.getElementById('flashcard').classList.remove('hidden');
+            }
+        }
     </script>
 </body>
 </html>

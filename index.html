@@ -536,6 +536,7 @@
             function showFlashcard() {
                 if (filteredWords.length === 0) return;
                 const word = filteredWords[currentIndex];
+                document.querySelector('.show-meaning-btn').textContent = 'Show Definition'
                 document.getElementById('word').innerText = word.word;
                 document.getElementById('partOfSpeech').innerText = word.partOfSpeech;
                 document.querySelector('.difficulty-badge').innerText = word.difficulty;

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Flashcards</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .hidden { display: none; }
+        .card { border: 1px solid #000; padding: 20px; margin: 20px auto; width: 300px; }
+        .btn { margin: 10px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="home">
+        <h2>Select Difficulty</h2>
+        <input type="checkbox" id="easy" value="Easy"> Easy
+        <input type="checkbox" id="medium" value="Medium"> Medium
+        <input type="checkbox" id="hard" value="Hard"> Hard
+        <input type="checkbox" id="selectAll"> Select All
+        <h2>Select Letter Range</h2>
+        <input type="text" id="letterStart" maxlength="1" size="1"> to 
+        <input type="text" id="letterEnd" maxlength="1" size="1">
+        <br><br>
+        <button class="btn" onclick="startFlashcards()">Start</button>
+    </div>
+    
+    <div id="flashcard" class="hidden">
+        <div class="card">
+            <h2 id="word"></h2>
+            <h4 id="partOfSpeech"></h4>
+            <p id="definition" class="hidden"></p>
+            <button class="btn" onclick="showMeaning()">See Meaning</button>
+        </div>
+        <button class="btn" onclick="prevWord()">Previous</button>
+        <button class="btn" onclick="nextWord()">Next</button>
+        <button class="btn" onclick="goHome()">Back to Home</button>
+    </div>
+
+    <script>
+        let words = [
+            { word: "abhorrent", partOfSpeech: "(adj.)", definition: "worthy of hatred and disgust", difficulty: "Easy" },
+            { word: "abridge", partOfSpeech: "(v.)", definition: "to shorten", difficulty: "Easy" },
+            { word: "abstain", partOfSpeech: "(v.)", definition: "to keep oneself from doing or having something", difficulty: "Easy" },
+            { word: "abstract", partOfSpeech: "(adj.)", definition: "relating to ideas rather than something physical or concrete", difficulty: "Easy" },
+            { word: "abundant", partOfSpeech: "(adj.)", definition: "existing in large quantities", difficulty: "Easy" }
+        ];
+        
+        let filteredWords = [];
+        let currentIndex = 0;
+        
+        function startFlashcards() {
+            const difficulties = [];
+            if (document.getElementById('easy').checked) difficulties.push('Easy');
+            if (document.getElementById('medium').checked) difficulties.push('Medium');
+            if (document.getElementById('hard').checked) difficulties.push('Hard');
+            
+            const startLetter = document.getElementById('letterStart').value.toLowerCase();
+            const endLetter = document.getElementById('letterEnd').value.toLowerCase() || startLetter;
+            
+            filteredWords = words.filter(w => difficulties.includes(w.difficulty.trim()) &&
+                w.word.toLowerCase()[0] >= startLetter && w.word.toLowerCase()[0] <= endLetter);
+            
+            filteredWords = filteredWords.sort(() => Math.random() - 0.5);
+            
+            if (filteredWords.length > 0) {
+                currentIndex = 0;
+                showFlashcard();
+                document.getElementById('home').classList.add('hidden');
+                document.getElementById('flashcard').classList.remove('hidden');
+            } else {
+                alert('No words found for the selected criteria.');
+            }
+        }
+        
+        function showFlashcard() {
+            if (filteredWords.length === 0) return;
+            const word = filteredWords[currentIndex];
+            document.getElementById('word').innerText = word.word;
+            document.getElementById('partOfSpeech').innerText = word.partOfSpeech;
+            document.getElementById('definition').innerText = word.definition;
+            document.getElementById('definition').classList.add('hidden');
+        }
+
+        function showMeaning() {
+            document.getElementById('definition').classList.remove('hidden');
+        }
+        
+        function nextWord() {
+            if (currentIndex < filteredWords.length - 1) {
+                currentIndex++;
+                showFlashcard();
+            }
+        }
+        
+        function prevWord() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showFlashcard();
+            }
+        }
+        
+        function goHome() {
+            document.getElementById('flashcard').classList.add('hidden');
+            document.getElementById('home').classList.remove('hidden');
+        }
+        
+        document.getElementById('selectAll').addEventListener('change', function() {
+            document.getElementById('easy').checked = this.checked;
+            document.getElementById('medium').checked = this.checked;
+            document.getElementById('hard').checked = this.checked;
+        });
+    </script>
+</body>
+</html>

@@ -97,6 +97,34 @@
     margin: 1rem 0;
 }
 
+.usage-section {
+    margin-top: 1.5rem;
+    padding-top: 0.5rem;
+}
+
+.usage-divider {
+    height: 1px;
+    background-color: #e9ecef;
+    margin: 0.5rem auto;
+    width: 80%;
+}
+
+.usage-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.usage-text {
+    font-style: italic;
+    color: #495057;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0.5rem 0;
+}
+
+
 .show-meaning-btn {
     background: #fff;
     border: 2px solid #007bff;

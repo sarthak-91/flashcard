@@ -1,8 +1,47 @@
 class UIManager {
     static showHome() {
+        // Show home screen and hide others
         document.getElementById('home').classList.remove('hidden');
         document.getElementById('flashcard').classList.add('hidden');
         document.getElementById('scoreScreen').classList.add('hidden');
+
+        // Reset difficulty checkboxes
+        ['easy', 'medium', 'hard'].forEach(diff => {
+            const checkbox = document.getElementById(diff);
+            if (checkbox) {
+                checkbox.checked = false;
+                // Reset the range inputs
+                const rangeDiv = document.getElementById(`${diff}Range`);
+                if (rangeDiv) {
+                    rangeDiv.classList.add('hidden');
+                    const startInput = document.getElementById(`${diff}Start`);
+                    const endInput = document.getElementById(`${diff}End`);
+                    if (startInput) startInput.value = '';
+                    if (endInput) endInput.value = '';
+                }
+            }
+        });
+
+        // Reset select all checkbox
+        const selectAll = document.getElementById('selectAll');
+        if (selectAll) selectAll.checked = false;
+
+        // Reset flashcard view
+        const definition = document.getElementById('definition');
+        if (definition) {
+            definition.classList.add('hidden');
+        }
+        
+        const showMeaningBtn = document.querySelector('.show-meaning-btn');
+        if (showMeaningBtn) {
+            showMeaningBtn.textContent = 'Show Definition';
+        }
+
+        // Reset progress bar
+        const progressFill = document.getElementById('progress-fill');
+        if (progressFill) {
+            progressFill.style.width = '0%';
+        }
     }
 
     static showFlashcard(word, currentIndex, totalWords) {
@@ -10,7 +49,8 @@ class UIManager {
         document.querySelector('.show-meaning-btn').textContent = 'Show Definition';
         document.getElementById('word').textContent = word.word;
         document.getElementById('partOfSpeech').textContent = word.partOfSpeech;
-        document.getElementById('definition').textContent = 'Definition: ' + word.definition;
+        document.getElementById('definition').textContent = 'Definition: ' + word.definition + '\n' + 'Usage: ' + word.usage
+        //document.getElementById('usage').textContent = 'Usage: ' + word.usage
         
         // Update difficulty badge
         const badge = document.getElementById('difficulty-badge');

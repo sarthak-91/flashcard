@@ -53,11 +53,6 @@
                         <input type="text" id="hardEnd" maxlength="1" size="1" placeholder="z">
                     </div>
                 </div>
-
-                <div class="select-all-row">
-                    <input type="checkbox" id="selectAll">
-                    <label for="selectAll">Select All</label>
-                </div>
             </div>
             <button id="start-btn" class="start-btn">Start Flashcards</button>
         </div>
@@ -79,6 +74,11 @@
                     <div id="definition" class="definition hidden">
                         <div class="definition-divider"></div>
                         <p></p>
+                        <div class="usage-section">
+                            <div class="usage-divider"></div>
+                            <p class="usage-label"></p>
+                            <p id="usage" class="usage-text"></p>
+                        </div>
                     </div>
                     
                     <button id="show-meaning-btn" class="show-meaning-btn">
@@ -206,8 +206,26 @@
         });
 
         // Home buttons
-        document.getElementById('home-btn').addEventListener('click', UIManager.showHome);
-        document.getElementById('score-home-btn').addEventListener('click', UIManager.showHome);
+        document.getElementById('home-btn').addEventListener('click', () => {
+          // Reset flashcard manager state
+            flashcardManager.currentIndex = 0;
+            flashcardManager.correctAnswers = 0;
+            flashcardManager.totalAnswered = 0;
+            flashcardManager.incorrectWords = [];
+            flashcardManager.filteredWords = [];
+
+            // Show home screen with reset
+            UIManager.showHome();});
+            document.getElementById('score-home-btn').addEventListener('click', () => {
+                flashcardManager.currentIndex = 0;
+                flashcardManager.correctAnswers = 0;
+                flashcardManager.totalAnswered = 0;
+                flashcardManager.incorrectWords = [];
+                flashcardManager.filteredWords = [];
+
+                // Show home screen with reset
+                UIManager.showHome();
+            });
 
         // Retry incorrect words
         document.getElementById('retry-incorrect-btn').addEventListener('click', retryIncorrectWords);

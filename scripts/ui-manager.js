@@ -10,7 +10,7 @@ class UIManager {
         document.querySelector('.show-meaning-btn').textContent = 'Show Definition';
         document.getElementById('word').textContent = word.word;
         document.getElementById('partOfSpeech').textContent = word.partOfSpeech;
-        document.getElementById('definition').textContent = word.definition;
+        document.getElementById('definition').textContent = 'Definition: ' + word.definition;
         
         // Update difficulty badge
         const badge = document.getElementById('difficulty-badge');

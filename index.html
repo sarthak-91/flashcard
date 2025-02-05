@@ -66,15 +66,13 @@
     <!-- Flashcard View -->
     <div id="flashcard" class="hidden container">
         <div class="flashcard-container">
-            <div class="card-outer">
-                <div class="progress-bar">
-                    <div class="progress-container">
-                        <div id="progress-fill" class="progress-fill"></div>
-                    </div>
-                    <div id="difficulty-badge" class="difficulty-badge"></div>
+            <div class="progress-bar">
+                <div class="progress-container">
+                    <div id="progress-fill" class="progress-fill"></div>
                 </div>
-                
-                
+                <div id="difficulty-badge" class="difficulty-badge"></div>
+            </div>
+            <div class="card-outer">  
                 <div class="card-content">
                     <h2 id="word"></h2>
                     <h4 id="partOfSpeech"></h4>
@@ -162,7 +160,11 @@
             flashcardManager.filterWords(selectedDifficulties, startLetters, endLetters);
             
             if (flashcardManager.filteredWords.length > 0) {
-                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                UIManager.showFlashcard(
+                    flashcardManager.getCurrentWord(),
+                    flashcardManager.currentIndex,
+                    flashcardManager.filteredWords.length
+                );
                 document.getElementById('home').classList.add('hidden');
                 document.getElementById('flashcard').classList.remove('hidden');
             } else {

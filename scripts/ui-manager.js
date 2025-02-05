@@ -6,19 +6,20 @@ class UIManager {
     }
 
     static showFlashcard(word, currentIndex, totalWords) {
+        document.getElementById('definition').classList.add('hidden');
+        document.querySelector('.show-meaning-btn').textContent = 'Show Definition';
         document.getElementById('word').textContent = word.word;
         document.getElementById('partOfSpeech').textContent = word.partOfSpeech;
         document.getElementById('definition').textContent = word.definition;
         
+        // Update difficulty badge
         const badge = document.getElementById('difficulty-badge');
         badge.textContent = word.difficulty;
         badge.className = 'difficulty-badge ' + word.difficulty;
         
+        // Update progress bar
         const progressPercent = ((currentIndex + 1) / totalWords) * 100;
         document.getElementById('progress-fill').style.width = `${progressPercent}%`;
-        
-        document.getElementById('definition').classList.add('hidden');
-        document.querySelector('.show-meaning-btn').textContent = 'Show Definition';
     }
 
     static showScore(correct, total) {

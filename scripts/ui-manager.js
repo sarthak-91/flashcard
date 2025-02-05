@@ -5,17 +5,23 @@ class UIManager {
         document.getElementById('scoreScreen').classList.add('hidden');
     }
 
-    static showFlashcard(word) {
-        document.getElementById('definition').classList.add('hidden');
-        document.querySelector('.show-meaning-btn').textContent = 'Show Definition'
+    static showFlashcard(word, currentIndex, totalWords) {
         document.getElementById('word').textContent = word.word;
         document.getElementById('partOfSpeech').textContent = word.partOfSpeech;
         document.getElementById('definition').textContent = word.definition;
-        // Other UI updates
+        
+        const badge = document.getElementById('difficulty-badge');
+        badge.textContent = word.difficulty;
+        badge.className = 'difficulty-badge ' + word.difficulty;
+        
+        const progressPercent = ((currentIndex + 1) / totalWords) * 100;
+        document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+        
+        document.getElementById('definition').classList.add('hidden');
+        document.querySelector('.show-meaning-btn').textContent = 'Show Definition';
     }
 
     static showScore(correct, total) {
         document.getElementById('score').textContent = `You got ${correct} out of ${total} correct.`;
-        // Switch to score screen
     }
 }

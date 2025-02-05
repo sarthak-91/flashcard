@@ -1,7 +1,7 @@
 class VocabularyLoader {
     static async loadWordsFromCSV() {
         try {
-            const response = await fetch('vocab_output.csv');
+            const response = await fetch('checking_output.csv');
             const csvText = await response.text();
             
             return this.parseCSV(csvText);

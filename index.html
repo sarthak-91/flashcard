@@ -68,8 +68,12 @@
         <div class="flashcard-container">
             <div class="card-outer">
                 <div class="progress-bar">
+                    <div class="progress-container">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
                     <div id="difficulty-badge" class="difficulty-badge"></div>
                 </div>
+                
                 
                 <div class="card-content">
                     <h2 id="word"></h2>
@@ -209,7 +213,11 @@
         function advanceToNextWord() {
             if (flashcardManager.currentIndex < flashcardManager.filteredWords.length - 1) {
                 flashcardManager.currentIndex++;
-                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                UIManager.showFlashcard(
+                    flashcardManager.getCurrentWord(),
+                    flashcardManager.currentIndex,
+                    flashcardManager.filteredWords.length
+        );
             } else {
                 showFinalScore();
             }
@@ -218,7 +226,11 @@
         function goToPreviousWord() {
             if (flashcardManager.currentIndex > 0) {
                 flashcardManager.currentIndex--;
-                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                UIManager.showFlashcard(
+                    flashcardManager.getCurrentWord(),
+                    flashcardManager.currentIndex,
+                    flashcardManager.filteredWords.length
+                );
             }
         }
 

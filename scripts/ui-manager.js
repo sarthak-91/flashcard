@@ -1,16 +1,17 @@
 class UIManager {
     static showHome() {
-        // Show home screen and hide others
+
         document.getElementById('home').classList.remove('hidden');
         document.getElementById('flashcard').classList.add('hidden');
         document.getElementById('scoreScreen').classList.add('hidden');
 
-        // Reset difficulty checkboxes
+
         ['easy', 'medium', 'hard'].forEach(diff => {
             const checkbox = document.getElementById(diff);
             if (checkbox) {
                 checkbox.checked = false;
-                // Reset the range inputs
+
+
                 const rangeDiv = document.getElementById(`${diff}Range`);
                 if (rangeDiv) {
                     rangeDiv.classList.add('hidden');
@@ -22,11 +23,9 @@ class UIManager {
             }
         });
 
-        // Reset select all checkbox
         const selectAll = document.getElementById('selectAll');
         if (selectAll) selectAll.checked = false;
 
-        // Reset flashcard view
         const definition = document.getElementById('definition');
         if (definition) {
             definition.classList.add('hidden');
@@ -41,7 +40,6 @@ class UIManager {
             showMeaningBtn.textContent = 'Show Definition';
         }
 
-        // Reset progress bar
         const progressFill = document.getElementById('progress-fill');
         if (progressFill) {
             progressFill.style.width = '0%';
@@ -71,7 +69,6 @@ class UIManager {
             const percentage = ((correct / total) * 100).toFixed(1);
             const scoreElement = document.getElementById('score');
             
-            // Enhanced score display with performance feedback
             let performanceMessage = '';
             if (percentage >= 90) performanceMessage = 'Excellent job! 🎉';
             else if (percentage >= 70) performanceMessage = 'Well done! 👏';

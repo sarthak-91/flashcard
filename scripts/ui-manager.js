@@ -31,6 +31,10 @@ class UIManager {
         if (definition) {
             definition.classList.add('hidden');
         }
+        const usage = document.getElementById('usage');
+        if (usage) {
+            usage.classList.add('hidden');
+        }
         
         const showMeaningBtn = document.querySelector('.show-meaning-btn');
         if (showMeaningBtn) {
@@ -46,11 +50,12 @@ class UIManager {
 
     static showFlashcard(word, currentIndex, totalWords) {
         document.getElementById('definition').classList.add('hidden');
+        document.getElementById('usage').classList.add('hidden');
         document.querySelector('.show-meaning-btn').textContent = 'Show Definition';
         document.getElementById('word').textContent = word.word;
         document.getElementById('partOfSpeech').textContent = word.partOfSpeech;
-        document.getElementById('definition').textContent = 'Definition: ' + word.definition + '\n' + 'Usage: ' + word.usage
-        //document.getElementById('usage').textContent = 'Usage: ' + word.usage
+        document.getElementById('definition').textContent = word.definition;
+        document.getElementById('usage').textContent =  word.usage;
         
         // Update difficulty badge
         const badge = document.getElementById('difficulty-badge');

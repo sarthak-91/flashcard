@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/flashcard.css">
     <link rel="stylesheet" href="styles/score.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
 </head>
 <body>
     <!-- Home Page -->
@@ -74,11 +77,10 @@
                     <div id="definition" class="definition hidden">
                         <div class="definition-divider"></div>
                         <p></p>
-                        <div class="usage-section">
-                            <div class="usage-divider"></div>
-                            <p class="usage-label"></p>
-                            <p id="usage" class="usage-text"></p>
-                        </div>
+                    </div>
+                    <div id="usage" class="usage hidden">
+                        <div class="usage-divider"></div>
+                        <p></p>
                     </div>
                     
                     <button id="show-meaning-btn" class="show-meaning-btn">
@@ -175,6 +177,7 @@
         // Show meaning button
         document.getElementById('show-meaning-btn').addEventListener('click', () => {
             document.getElementById('definition').classList.toggle('hidden');
+            document.getElementById('usage').classList.toggle('hidden');
             const button = document.querySelector('.show-meaning-btn');
             if (document.getElementById('definition').classList.contains('hidden')) {
                 button.textContent = 'Show Definition';
@@ -265,6 +268,10 @@
 
         function retryIncorrectWords() {
             if (flashcardManager.incorrectWords.length > 0) {
+                const progressFill = document.getElementById('progress-fill');
+                if (progressFill) {
+                    progressFill.style.width = '0%';
+                }
                 flashcardManager.filteredWords = flashcardManager.incorrectWords;
                 flashcardManager.incorrectWords = [];
                 flashcardManager.currentIndex = 0;

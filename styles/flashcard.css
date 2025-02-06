@@ -13,27 +13,10 @@
     overflow: hidden;
     position: relative;
     transition: transform 0.2s;
-    width: 100%; 
-    margin: 0 auto;
-    padding: 0; 
-    display: flex;
-    flex-direction: column;
 }
 
-.card-content {
-    padding: 1.5rem;
-    text-align: center;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.card-content h4 {
-    font-size: 1.1rem;
-    color: #666;
-    margin: 0;
-    font-weight: normal;
+.card-outer:hover {
+    transform: translateY(-2px);
 }
 
 .progress-bar {
@@ -60,25 +43,48 @@
     transition: width 0.3s ease;
 }
 
-.difficulty-badge {
-    font-size: 0.875rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    color: white;
-    font-weight: 500;
-}
-
-.difficulty-badge.Easy {
+.progress-fill.complete {
+    transition: background-color 0.3s;
     background-color: #28a745;
 }
 
-.difficulty-badge.Medium {
-    background-color: #ffc107;
-    color: #212529;
+.difficulty-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    text-transform: capitalize;
 }
 
-.difficulty-badge.Hard {
+.difficulty-badge.easy {
+    background-color: #28a745;
+    color: white;
+}
+
+.difficulty-badge.medium {
+    background-color: #ffc107;
+    color: black;
+}
+
+.difficulty-badge.hard {
     background-color: #dc3545;
+    color: white;
+}
+.card-content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.card-content h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+}
+
+.card-content h4 {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+    font-weight: normal;
 }
 
 .definition {
@@ -98,17 +104,6 @@
     margin: 1rem 0;
 }
 
-.card-content h2 {
-    color: #333;
-    margin: 0 0 0.5rem 0;
-    max-width: 100%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
-    font-size: clamp(1.2rem, 4vw, 2rem); 
-    padding: 0 0.5rem; 
-}
-
 .show-meaning-btn {
     background: #fff;
     border: 2px solid #007bff;
@@ -125,7 +120,6 @@
     background: #007bff;
     color: white;
 }
-
 
 .response-buttons {
     display: flex;
@@ -163,29 +157,12 @@
     background: #c82333;
 }
 
-.response-btn {
-    flex: 1;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    white-space: nowrap; 
-}
-
-
 .navigation-buttons {
     display: flex;
-    gap: 0.5rem;
-    margin: 1rem 0;
-    justify-content: center;
-    width: 100%;
-    padding: 0 1rem;
-    box-sizing: border-box;
+    gap: 1rem;
     margin: 1.5rem 0;
     justify-content: center;
 }
-
-
 
 .nav-btn {
     padding: 0.6rem 1.2rem;
@@ -210,97 +187,17 @@
     background: #c82333;
 }
 
-
-.progress-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f9fa;
-    padding: 0.75rem;
-    border-bottom: 1px solid #eee;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.progress-container {
-    flex-grow: 1;
-    background-color: #e9ecef;
-    height: 8px;
-    border-radius: 4px;
-    margin-right: 0.75rem;
-    overflow: hidden;
-}
-
-/* Definition and usage sections */
-.definition, .usage {
-    margin-top: 1.5rem;
-    padding: 0 0.75rem;
-    box-sizing: border-box;
-}
-
-.definition p, .usage p {
-    color: #495057;
-    font-size: 1rem;
-    margin: 0.75rem 0;
-    line-height: 1.4;
-}
-
-
-.definition-divider, .usage-divider {
-    height: 1px;
-    background: #e9ecef;
-    margin: 0.75rem auto;
-    width: 90%;
-}
-
-.show-meaning-btn {
-    margin: 1rem 0;
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
-}
-
-
 .home-btn {
-    width: calc(100% - 2rem);
-    margin: 1rem;
+    width: 100%;
     padding: 0.8rem;
-    font-size: 0.9rem;
     background: #6c757d;
     color: white;
-    cursor: pointer;
-    transition: background-color 0.2s;
     border: none;
     border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
+
 .home-btn:hover {
     background: #5a6268;
-}
-
-
-@media (min-width: 768px) {
-    .card-content h2 {
-        font-size: 2rem;
-    }
-    
-    .response-btn, .nav-btn {
-        font-size: 1rem;
-    }
-    
-    .definition p, .usage p {
-        font-size: 1.2rem;
-    }
-    
-    .show-meaning-btn {
-        font-size: 1rem;
-        padding: 0.8rem 1.5rem;
-    }
-    
-    .response-buttons {
-        gap: 1rem;
-        padding: 1.5rem;
-    }
-    
-    .navigation-buttons {
-        gap: 1rem;
-    }
 }

@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
 </head>
 <body>
-
+    <!-- Home Page -->
     <div id="home" class="container">
         <div class="difficulty-card">
             <h2>Vocabulary Flashcards</h2>
@@ -146,6 +146,7 @@
 
         // Start button
         document.getElementById('start-btn').addEventListener('click', () => {
+            UIManager._switchScreen(UIManager.ELEMENTS.screens.flashcard);
             const selectedDifficulties = [];
             const startLetters = {};
             const endLetters = {};

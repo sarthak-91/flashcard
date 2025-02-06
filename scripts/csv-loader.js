@@ -15,26 +15,23 @@ class VocabularyLoader {
     static parseCSV(csvText) {
         const lines = csvText.split('\n').filter(line => line.trim() !== '');
         lines.shift(); // Remove header
-
+    
         return lines.map(line => {
-            const firstCommaIndex = line.indexOf(',');
-            const word = line.slice(0, firstCommaIndex).trim();
-            
-            const restOfLine = line.slice(firstCommaIndex + 1);
-            const secondCommaIndex = restOfLine.indexOf(',');
-            const partOfSpeech = restOfLine.slice(0, secondCommaIndex).trim();
-            
-            const remainingText = restOfLine.slice(secondCommaIndex + 1);
-            const lastCommaIndex = remainingText.lastIndexOf(',');
-            
-            const definition = remainingText.slice(0, lastCommaIndex).trim();
-            const difficulty = remainingText.slice(lastCommaIndex + 1).trim();
-
+            const columns = line.split(',');
+    
+            // Extract each column value
+            const word = columns[0].trim();
+            const partOfSpeech = columns[1].trim();
+            const definition = columns[2].trim();
+            const difficulty = columns[3].trim();
+            const usage = columns[4].trim();
+    
             return {
                 word,
                 partOfSpeech: `(${partOfSpeech})`,
                 definition,
-                difficulty
+                difficulty,
+                usage
             };
         });
     }

@@ -1,11 +1,4 @@
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
-}
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
 .flashcard-container {
     max-width: 600px;
     margin: 2rem auto;

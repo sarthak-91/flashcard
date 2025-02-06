@@ -29,8 +29,6 @@ class UIManager {
             console.error('No word provided to showFlashcard');
             return;
         }
-
-        this._switchScreen(this.ELEMENTS.screens.flashcard);
         this._updateFlashcardContent(word);
         this._updateProgress(currentIndex, totalWords);
         this._updateDifficultyBadge(word.difficulty);

@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/flashcard.css">
     <link rel="stylesheet" href="styles/score.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-test/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-test/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon-test/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
 </head>
 <body>
     <!-- Home Page -->
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <!-- Flashcard View -->
+
     <div id="flashcard" class="hidden container">
         <div class="flashcard-container">
             <div class="progress-bar">
@@ -146,6 +146,7 @@
 
         // Start button
         document.getElementById('start-btn').addEventListener('click', () => {
+            UIManager._switchScreen(UIManager.ELEMENTS.screens.flashcard);
             const selectedDifficulties = [];
             const startLetters = {};
             const endLetters = {};

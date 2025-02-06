@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/flashcard.css">
     <link rel="stylesheet" href="styles/score.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
 </head>
 <body>
     <!-- Home Page -->
@@ -53,11 +56,6 @@
                         <input type="text" id="hardEnd" maxlength="1" size="1" placeholder="z">
                     </div>
                 </div>
-
-                <div class="select-all-row">
-                    <input type="checkbox" id="selectAll">
-                    <label for="selectAll">Select All</label>
-                </div>
             </div>
             <button id="start-btn" class="start-btn">Start Flashcards</button>
         </div>
@@ -66,16 +64,22 @@
     <!-- Flashcard View -->
     <div id="flashcard" class="hidden container">
         <div class="flashcard-container">
-            <div class="card-outer">
-                <div class="progress-bar">
-                    <div id="difficulty-badge" class="difficulty-badge"></div>
+            <div class="progress-bar">
+                <div class="progress-container">
+                    <div id="progress-fill" class="progress-fill"></div>
                 </div>
-                
+                <div id="difficulty-badge" class="difficulty-badge"></div>
+            </div>
+            <div class="card-outer">  
                 <div class="card-content">
                     <h2 id="word"></h2>
                     <h4 id="partOfSpeech"></h4>
                     <div id="definition" class="definition hidden">
                         <div class="definition-divider"></div>
+                        <p></p>
+                    </div>
+                    <div id="usage" class="usage hidden">
+                        <div class="usage-divider"></div>
                         <p></p>
                     </div>
                     
@@ -158,7 +162,11 @@
             flashcardManager.filterWords(selectedDifficulties, startLetters, endLetters);
             
             if (flashcardManager.filteredWords.length > 0) {
-                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                UIManager.showFlashcard(
+                    flashcardManager.getCurrentWord(),
+                    flashcardManager.currentIndex,
+                    flashcardManager.filteredWords.length
+                );
                 document.getElementById('home').classList.add('hidden');
                 document.getElementById('flashcard').classList.remove('hidden');
             } else {
@@ -169,6 +177,7 @@
         // Show meaning button
         document.getElementById('show-meaning-btn').addEventListener('click', () => {
             document.getElementById('definition').classList.toggle('hidden');
+            document.getElementById('usage').classList.toggle('hidden');
             const button = document.querySelector('.show-meaning-btn');
             if (document.getElementById('definition').classList.contains('hidden')) {
                 button.textContent = 'Show Definition';
@@ -200,8 +209,26 @@
         });
 
         // Home buttons
-        document.getElementById('home-btn').addEventListener('click', UIManager.showHome);
-        document.getElementById('score-home-btn').addEventListener('click', UIManager.showHome);
+        document.getElementById('home-btn').addEventListener('click', () => {
+          // Reset flashcard manager state
+            flashcardManager.currentIndex = 0;
+            flashcardManager.correctAnswers = 0;
+            flashcardManager.totalAnswered = 0;
+            flashcardManager.incorrectWords = [];
+            flashcardManager.filteredWords = [];
+
+            // Show home screen with reset
+            UIManager.showHome();});
+            document.getElementById('score-home-btn').addEventListener('click', () => {
+                flashcardManager.currentIndex = 0;
+                flashcardManager.correctAnswers = 0;
+                flashcardManager.totalAnswered = 0;
+                flashcardManager.incorrectWords = [];
+                flashcardManager.filteredWords = [];
+
+                // Show home screen with reset
+                UIManager.showHome();
+            });
 
         // Retry incorrect words
         document.getElementById('retry-incorrect-btn').addEventListener('click', retryIncorrectWords);
@@ -209,7 +236,11 @@
         function advanceToNextWord() {
             if (flashcardManager.currentIndex < flashcardManager.filteredWords.length - 1) {
                 flashcardManager.currentIndex++;
-                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                UIManager.showFlashcard(
+                    flashcardManager.getCurrentWord(),
+                    flashcardManager.currentIndex,
+                    flashcardManager.filteredWords.length
+        );
             } else {
                 showFinalScore();
             }
@@ -218,7 +249,11 @@
         function goToPreviousWord() {
             if (flashcardManager.currentIndex > 0) {
                 flashcardManager.currentIndex--;
-                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                UIManager.showFlashcard(
+                    flashcardManager.getCurrentWord(),
+                    flashcardManager.currentIndex,
+                    flashcardManager.filteredWords.length
+                );
             }
         }
 
@@ -233,6 +268,10 @@
 
         function retryIncorrectWords() {
             if (flashcardManager.incorrectWords.length > 0) {
+                const progressFill = document.getElementById('progress-fill');
+                if (progressFill) {
+                    progressFill.style.width = '0%';
+                }
                 flashcardManager.filteredWords = flashcardManager.incorrectWords;
                 flashcardManager.incorrectWords = [];
                 flashcardManager.currentIndex = 0;

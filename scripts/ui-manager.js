@@ -68,6 +68,22 @@ class UIManager {
     }
 
     static showScore(correct, total) {
-        document.getElementById('score').textContent = `You got ${correct} out of ${total} correct.`;
-    }
+            const percentage = ((correct / total) * 100).toFixed(1);
+            const scoreElement = document.getElementById('score');
+            
+            // Enhanced score display with performance feedback
+            let performanceMessage = '';
+            if (percentage >= 90) performanceMessage = 'Excellent job! 🎉';
+            else if (percentage >= 70) performanceMessage = 'Well done! 👏';
+            else if (percentage >= 50) performanceMessage = 'Good effort! 💪';
+            else performanceMessage = 'Keep practicing! 📚';
+    
+            scoreElement.innerHTML = `
+                <div class="score-details">
+                    <h3>Your Results</h3>
+                    <p class="score-numbers">Score: ${correct}/${total} (${percentage}%)</p>
+                    <p class="score-message">${performanceMessage}</p>
+                </div>
+            `;
+        }
 }

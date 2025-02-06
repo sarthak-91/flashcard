@@ -11,6 +11,10 @@
     overflow: hidden;
     position: relative;
     transition: transform 0.2s;
+    width: 90%; 
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
 .card-outer:hover {
@@ -20,14 +24,21 @@
 .card-content {
     padding: 2rem;
     text-align: center;
+    padding: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
 }
 
 .card-content h2 {
-    font-size: 2.3rem;
     color: #333;
     margin: 0 0 0.5rem 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
 }
-
 .card-content h4 {
     font-size: 1.1rem;
     color: #666;

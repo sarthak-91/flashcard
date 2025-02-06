@@ -1,3 +1,11 @@
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 .flashcard-container {
     max-width: 600px;
     margin: 2rem auto;
@@ -24,15 +32,32 @@
     display: flex;
     justify-content: flex-end;
 }
-
-.difficulty-badge {
-    font-size: 0.875rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    background: #e9ecef;
-    color: #495057;
+.progress-fill.complete {
+    transition: background-color 0.3s;
+    background-color: #28a745;
 }
 
+.difficulty-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.difficulty-badge.easy {
+    background-color: #28a745;
+    color: white;
+}
+
+.difficulty-badge.medium {
+    background-color: #ffc107;
+    color: black;
+}
+
+.difficulty-badge.hard {
+    background-color: #dc3545;
+    color: white;
+}
 .card-content {
     padding: 2rem;
     text-align: center;

@@ -38,7 +38,7 @@ class UIManager {
         const percentage = ((correct / total) * 100).toFixed(1);
         const scoreElement = document.getElementById('score');
         
-        // Enhanced score display with performance feedback
+        
         let performanceMessage = '';
         if (percentage >= 90) performanceMessage = 'Excellent job! 🎉';
         else if (percentage >= 70) performanceMessage = 'Well done! 👏';
@@ -56,7 +56,6 @@ class UIManager {
         this._switchScreen(this.ELEMENTS.screens.scoreScreen);
     }
 
-    // Private helper methods
     static _switchScreen(screenId) {
         // Hide all screens first
         Object.values(this.ELEMENTS.screens).forEach(screen => {
@@ -94,10 +93,6 @@ class UIManager {
                 });
             }
         });
-
-        // Reset select all checkbox if it exists
-        const selectAll = document.getElementById('selectAll');
-        if (selectAll) selectAll.checked = false;
     }
 
     static _resetFlashcardState() {
@@ -113,7 +108,7 @@ class UIManager {
         });
 
         // Reset show meaning button
-        const showMeaningBtn = document.querySelector(elements.showMeaningBtn);
+        const showMeaningBtn = document.querySelector(elements.flashcard.showMeaningBtn);
         if (showMeaningBtn) {
             showMeaningBtn.textContent = 'Show Definition';
             showMeaningBtn.classList.remove('active');
@@ -138,6 +133,10 @@ class UIManager {
             const element = document.getElementById(elementId);
             if (element) element.textContent = content;
         });
+        const showMeaningBtn = document.querySelector(this.ELEMENTS.flashcard.showMeaningBtn);
+        if (showMeaningBtn) {
+            showMeaningBtn.textContent = 'Show Definition';
+        }
 
         // Reset visibility states
         document.getElementById(this.ELEMENTS.flashcard.definition).classList.add('hidden');

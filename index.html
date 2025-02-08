@@ -177,9 +177,14 @@
         
         // Show meaning button
         document.getElementById('show-meaning-btn').addEventListener('click', () => {
-            document.getElementById('definition').classList.toggle('hidden');
-            document.getElementById('usage').classList.toggle('hidden');
-            const button = document.querySelector('.show-meaning-btn');
+            const definitionEl = document.getElementById('definition');
+            const usageEl = document.getElementById('usage');
+            const button = document.querySelector('.show-meaning-btn');            
+            const isShowing = !definitionEl.classList.contains('hidden');
+            definitionEl.classList.toggle('hidden');
+            usageEl.classList.toggle('hidden');
+            button.textContent = isShowing ? 'Show Definition' : 'Hide Definition';
+            button.setAttribute('data-shown', !isShowing);
             if (document.getElementById('definition').classList.contains('hidden')) {
                 button.textContent = 'Show Definition';
             } else {

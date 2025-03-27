@@ -159,7 +159,6 @@
                     endLetters[difficulty] = document.getElementById(`${diff}End`).value.toLowerCase() || 'z';
                 }
             });
-            
             flashcardManager.filterWords(selectedDifficulties, startLetters, endLetters);
             
             if (flashcardManager.filteredWords.length > 0) {

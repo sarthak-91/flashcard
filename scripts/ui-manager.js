@@ -146,6 +146,7 @@ class UIManager {
     static _updateProgress(currentIndex, totalWords) {
         const progressFill = document.getElementById(this.ELEMENTS.flashcard.progressFill);
         if (!progressFill) return;
+        progressFill.classList.remove('complete');
 
         const progressPercent = ((currentIndex + 1) / totalWords) * 100;
         progressFill.style.width = `${progressPercent}%`;

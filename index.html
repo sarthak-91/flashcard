@@ -68,7 +68,10 @@
                 <div class="progress-container">
                     <div id="progress-fill" class="progress-fill"></div>
                 </div>
-                <div id="difficulty-badge" class="difficulty-badge"></div>
+                <div class="progress-details">
+                    <div id="word-count" class="word-count">0/0</div>
+                    <div id="difficulty-badge" class="difficulty-badge"></div>
+                </div>
             </div>
             <div class="card-outer">  
                 <div class="card-content">
@@ -128,23 +131,18 @@
     <script src="scripts/ui-manager.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', async () => {
-        // Load words from CSV
         const words = await VocabularyLoader.loadWordsFromCSV();
         
-        // Initialize managers
         const flashcardManager = new FlashcardManager(words);
         
-        // Toggle range visibility
         function toggleRange(difficulty) {
             document.getElementById(`${difficulty}Range`).classList.toggle('hidden', !document.getElementById(difficulty).checked);
         }
 
-        // Attach toggle range to checkboxes
         ['easy', 'medium', 'hard'].forEach(diff => {
             document.getElementById(diff).addEventListener('change', () => toggleRange(diff));
         });
 
-        // Start button
         document.getElementById('start-btn').addEventListener('click', () => {
             UIManager._switchScreen(UIManager.ELEMENTS.screens.flashcard);
             const selectedDifficulties = [];
@@ -174,7 +172,6 @@
             }
         });
         
-        // Show meaning button
         document.getElementById('show-meaning-btn').addEventListener('click', () => {
             const definitionEl = document.getElementById('definition');
             const usageEl = document.getElementById('usage');
@@ -191,7 +188,6 @@
             }
         });
         
-        // Know/Don't Know buttons
         document.getElementById('know-btn').addEventListener('click', () => {
             flashcardManager.markAnswer(true);
             advanceToNextWord();
@@ -202,27 +198,22 @@
             advanceToNextWord();
         });
 
-        // Next/Previous buttons
         document.getElementById('next-btn').addEventListener('click', advanceToNextWord);
         document.getElementById('prev-btn').addEventListener('click', goToPreviousWord);
 
-        // End quiz button
         document.getElementById('end-quiz-btn').addEventListener('click', () => {
             if (confirm('Are you sure you want to end the quiz?')) {
                 showFinalScore();
             }
         });
 
-        // Home buttons
         document.getElementById('home-btn').addEventListener('click', () => {
-          // Reset flashcard manager state
             flashcardManager.currentIndex = 0;
             flashcardManager.correctAnswers = 0;
             flashcardManager.totalAnswered = 0;
             flashcardManager.incorrectWords = [];
             flashcardManager.filteredWords = [];
 
-            // Show home screen with reset
             UIManager.showHome();});
             document.getElementById('score-home-btn').addEventListener('click', () => {
                 flashcardManager.currentIndex = 0;
@@ -231,11 +222,10 @@
                 flashcardManager.incorrectWords = [];
                 flashcardManager.filteredWords = [];
 
-                // Show home screen with reset
                 UIManager.showHome();
             });
 
-        // Retry incorrect words
+
         document.getElementById('retry-incorrect-btn').addEventListener('click', retryIncorrectWords);
 
         function advanceToNextWord() {
@@ -283,14 +273,45 @@
                 flashcardManager.currentIndex = 0;
                 flashcardManager.correctAnswers = 0;
                 flashcardManager.totalAnswered = 0;
-
-                UIManager.showFlashcard(flashcardManager.getCurrentWord());
+                UIManager.showFlashcard(
+                    flashcardManager.getCurrentWord(), 
+                    flashcardManager.currentIndex, 
+                    flashcardManager.filteredWords.length
+                );
                 document.getElementById('scoreScreen').classList.add('hidden');
                 document.getElementById('flashcard').classList.remove('hidden');
             } else {
                 alert('No incorrect words to retry.');
             }
         }
+
+        document.addEventListener('keydown', (event) => {
+            const isHomeVisible = !document.getElementById('home').classList.contains('hidden');
+            if (event.key === 'Enter' && isHomeVisible) {
+                document.getElementById('start-btn').click();
+            }
+        });
+        document.addEventListener('keydown', (event) => {
+            const isFlashcardVisible = !document.getElementById('flashcard').classList.contains('hidden');
+            if (event.key === 'Enter' && isFlashcardVisible) {
+                document.getElementById('know-btn').click();
+            }
+});
+
+        document.addEventListener('keydown', (event) => {
+            const isFlashcardVisible = !document.getElementById('flashcard').classList.contains('hidden');
+
+            if (isFlashcardVisible) {
+                switch(event.key) {
+                    case 'ArrowRight':
+                        document.getElementById('next-btn').click();
+                        break;
+                    case 'ArrowLeft':
+                        document.getElementById('prev-btn').click();
+                        break;
+                }
+            }
+        });
     });
     </script>
 </body>

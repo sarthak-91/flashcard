@@ -18,15 +18,13 @@ class VocabularyLoader {
     }
 
     static parseCSV(csvText) {
-        // More robust CSV parsing
         const lines = csvText.split('\n').filter(line => line.trim() !== '');
         const headers = lines.shift().split(',').map(header => header.trim());
 
         return lines.map(line => {
-            // Handle quoted fields and escaped commas
             const columns = this.splitCSVLine(line);
 
-            // Validate we have enough columns
+      
             if (columns.length < headers.length) {
                 console.warn(`Skipping malformed line: ${line}`);
                 return null;
@@ -63,7 +61,7 @@ class VocabularyLoader {
         
         result.push(current);
         
-        // Remove quotes from entries
+    
         return result.map(entry => entry.replace(/^"|"$/g, '').trim());
     }
 }

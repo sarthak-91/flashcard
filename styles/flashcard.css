@@ -30,6 +30,7 @@
     background: #f8f9fa;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #eee;
+    gap: 1rem;
 }
 
 .progress-container {
@@ -52,11 +53,28 @@
     background-color: #28a745;
 }
 
+.progress-details {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Space between word count and difficulty badge */
+}
+
+.word-count {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+    min-width: 45px; /* Ensure consistent width */
+    text-align: right;
+}
+
 .difficulty-badge {
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-weight: 500;
     text-transform: capitalize;
+    font-size: 0.8rem;
+    min-width: 60px; /* Ensure consistent width */
+    text-align: center;
 }
 
 .difficulty-badge.easy {
@@ -249,3 +267,5 @@
         gap: 1rem;
     }
 }
+
+

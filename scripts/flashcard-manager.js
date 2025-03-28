@@ -13,12 +13,12 @@ class FlashcardManager {
     
     
             const filteredWords = this.words.filter(word => {
-                // Check if the word meets difficulty criteria
+ 
                 const matchesDifficulty = difficulties.some(diff => 
                     word.difficulty.toLowerCase() === diff.toLowerCase()
                 );
     
-                // Get start and end letters for this difficulty
+
                 const startLetter = (startLetters[word.difficulty] || 'a').toLowerCase();
                 const endLetter = (endLetters[word.difficulty] || 'z').toLowerCase();
     
@@ -29,13 +29,12 @@ class FlashcardManager {
                        firstLetter <= endLetter;
             });
     
-            // Random shuffle
+
             this.filteredWords = filteredWords.sort(() => Math.random() - 0.5);
         
-        // Ensure some words are selected
         if (this.filteredWords.length === 0) {
             console.warn('No words match the selected criteria');
-            this.filteredWords = this.words; // Fallback to all words
+            this.filteredWords = this.words; 
         }
         return this.filteredWords;
     }

@@ -13,12 +13,13 @@ class UIManager {
             usage: 'usage',
             showMeaningBtn: '.show-meaning-btn',
             progressFill: 'progress-fill',
-            difficultyBadge: 'difficulty-badge'
+            difficultyBadge: 'difficulty-badge',
+            wordCount: 'word-count'
         }
     };
 
     static showHome() {
-        // Use screen transition with feedback
+
         this._switchScreen(this.ELEMENTS.screens.home);
         this._resetHomeScreen();
         this._resetFlashcardState();
@@ -57,24 +58,23 @@ class UIManager {
     }
 
     static _switchScreen(screenId) {
-        // Hide all screens first
+ 
         Object.values(this.ELEMENTS.screens).forEach(screen => {
             document.getElementById(screen).classList.add('hidden');
         });
         
-        // Show requested screen with fade effect
+
         const screenElement = document.getElementById(screenId);
         screenElement.classList.remove('hidden');
         screenElement.classList.add('fade-in');
-        
-        // Remove fade class after animation
+
         setTimeout(() => {
             screenElement.classList.remove('fade-in');
         }, 500);
     }
 
     static _resetHomeScreen() {
-        // Reset difficulty selections
+
         this.ELEMENTS.difficulties.forEach(diff => {
             const checkbox = document.getElementById(diff);
             const rangeDiv = document.getElementById(`${diff}Range`);
@@ -83,7 +83,7 @@ class UIManager {
                 checkbox.checked = false;
                 rangeDiv.classList.add('hidden');
                 
-                // Reset and clear range inputs
+
                 ['Start', 'End'].forEach(type => {
                     const input = document.getElementById(`${diff}${type}`);
                     if (input) {
@@ -98,7 +98,7 @@ class UIManager {
     static _resetFlashcardState() {
         const elements = this.ELEMENTS.flashcard;
         
-        // Reset flashcard content
+
         ['definition', 'usage'].forEach(element => {
             const el = document.getElementById(elements[element]);
             if (el) {
@@ -107,14 +107,13 @@ class UIManager {
             }
         });
 
-        // Reset show meaning button
+
         const showMeaningBtn = document.querySelector(elements.flashcard.showMeaningBtn);
         if (showMeaningBtn) {
             showMeaningBtn.textContent = 'Show Definition';
             showMeaningBtn.classList.remove('active');
         }
 
-        // Reset progress
         const progressFill = document.getElementById(elements.progressFill);
         if (progressFill) {
             progressFill.style.width = '0%';
@@ -123,7 +122,7 @@ class UIManager {
     }
 
     static _updateFlashcardContent(word) {
-        // Update word display with error handling
+
         Object.entries({
             [this.ELEMENTS.flashcard.word]: word.word,
             [this.ELEMENTS.flashcard.partOfSpeech]: word.partOfSpeech,
@@ -138,22 +137,28 @@ class UIManager {
             showMeaningBtn.textContent = 'Show Definition';
         }
 
-        // Reset visibility states
+
         document.getElementById(this.ELEMENTS.flashcard.definition).classList.add('hidden');
         document.getElementById(this.ELEMENTS.flashcard.usage).classList.add('hidden');
     }
 
     static _updateProgress(currentIndex, totalWords) {
+        currentIndex = Math.max(0, currentIndex);
+        totalWords = Math.max(1, totalWords);
         const progressFill = document.getElementById(this.ELEMENTS.flashcard.progressFill);
+        const wordCountElement = document.getElementById(this.ELEMENTS.flashcard.wordCount);
         if (!progressFill) return;
         progressFill.classList.remove('complete');
 
         const progressPercent = ((currentIndex + 1) / totalWords) * 100;
         progressFill.style.width = `${progressPercent}%`;
         
-        // Add completion effect
+
         if (progressPercent === 100) {
             progressFill.classList.add('complete');
+        }
+        if (wordCountElement) {
+            wordCountElement.textContent = `${currentIndex + 1}/${totalWords}`;
         }
     }
 

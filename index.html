@@ -309,6 +309,28 @@
                     case 'ArrowLeft':
                         document.getElementById('prev-btn').click();
                         break;
+                    case 'ArrowDown':
+                      const definitionEl = document.getElementById('definition');
+                      const usageEl = document.getElementById('usage');
+                      const button = document.querySelector('.show-meaning-btn');
+                
+                if (definitionEl.classList.contains('hidden')) {
+                    definitionEl.classList.remove('hidden');
+                    usageEl.classList.remove('hidden');
+                    button.textContent = 'Hide Definition';
+                }
+                break;
+            case 'ArrowUp':
+                const definitionElement = document.getElementById('definition');
+                const usageElement = document.getElementById('usage');
+                const showButton = document.querySelector('.show-meaning-btn');
+                
+                if (!definitionElement.classList.contains('hidden')) {
+                    definitionElement.classList.add('hidden');
+                    usageElement.classList.add('hidden');
+                    showButton.textContent = 'Show Definition';
+                }
+                break;
                 }
             }
         });

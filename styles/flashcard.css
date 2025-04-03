@@ -56,14 +56,14 @@
 .progress-details {
     display: flex;
     align-items: center;
-    gap: 0.75rem; /* Space between word count and difficulty badge */
+    gap: 0.75rem; 
 }
 
 .word-count {
     font-size: 0.9rem;
     color: #6c757d;
     font-weight: 500;
-    min-width: 45px; /* Ensure consistent width */
+    min-width: 45px;
     text-align: right;
 }
 
@@ -241,10 +241,13 @@
 
 
 .keyboard-shortcuts-hint {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: sticky; 
+    margin: 5px auto 5px; 
+    margin-top: 10px;
+    left: auto;  
+    bottom: auto;
+    text-align: center;
+    transform: none;
     background-color: rgba(70, 63, 63, 0.7);
     color: white;
     padding: 6px 12px;
@@ -255,7 +258,8 @@
     max-width: 98%;
     white-space: nowrap;
     overflow-x: auto;
-  }
+    margin-top: 20px;  
+}
   
   .hint-title {
     font-weight: bold;
@@ -308,7 +312,6 @@
     .definition p, .usage p {
         font-size: 1.2rem;
     }
-
     .response-buttons {
         gap: 1rem;
         padding: 1.5rem;
@@ -318,20 +321,32 @@
         gap: 1rem;
     }
 }
-@media (max-width: 600px) {
+
+
+body {
+    padding-bottom: 60px;
+}
+
+.navigation-buttons {
+    margin-bottom: 50px;
+}
+
+.home-btn {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
     .keyboard-shortcuts-hint {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 6px 8px;
+        display: none;
     }
     
-    .hint-items {
-      gap: 8px;
+    body {
+        padding-bottom: initial;
     }
     
-    kbd {
-      font-size: 0.8rem;
+    .navigation-buttons, .home-btn {
+        margin-bottom: initial;
     }
-  }
+}
 
 

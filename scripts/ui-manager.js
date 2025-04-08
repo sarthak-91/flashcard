@@ -5,7 +5,7 @@ class UIManager {
             flashcard: 'flashcard',
             scoreScreen: 'scoreScreen'
         },
-        difficulties: ['easy', 'medium', 'hard'],
+        difficulties: ['easy', 'medium', 'hard','wildcard'],
         flashcard: {
             word: 'word',
             partOfSpeech: 'partOfSpeech',

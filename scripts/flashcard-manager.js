@@ -10,23 +10,29 @@ class FlashcardManager {
 
     
         filterWords(difficulties, startLetters, endLetters) {
-    
+            console.log('Filtering with difficulties:', difficulties);
+            console.log('Start letters:', startLetters);
+            console.log('End letters:', endLetters);
+            console.log('Total words before filtering:', this.words.length);
     
             const filteredWords = this.words.filter(word => {
- 
+                const wordDifficulty = word.difficulty.trim();
                 const matchesDifficulty = difficulties.some(diff => 
-                    word.difficulty.toLowerCase() === diff.toLowerCase()
+                    wordDifficulty.toLowerCase() === diff.toLowerCase()
                 );
     
+                if (!matchesDifficulty) return false;
+                const difficultyKey = difficulties.find(diff => 
+                    wordDifficulty.toLowerCase() === diff.toLowerCase()
+                );
+                
 
-                const startLetter = (startLetters[word.difficulty] || 'a').toLowerCase();
-                const endLetter = (endLetters[word.difficulty] || 'z').toLowerCase();
+                const startLetter = (startLetters[difficultyKey] || 'a').toLowerCase();
+                const endLetter = (endLetters[difficultyKey] || 'z').toLowerCase();
     
                 const firstLetter = word.word[0].toLowerCase();
     
-                return matchesDifficulty && 
-                       firstLetter >= startLetter && 
-                       firstLetter <= endLetter;
+                return firstLetter >= startLetter && firstLetter <= endLetter;
             });
     
 

@@ -91,6 +91,10 @@
     background-color: #dc3545;
     color: white;
 }
+.difficulty-badge.wildcard {
+    background-color: #9c27b0; 
+    color: white;
+}
 .card-content {
     text-align: center;
     word-wrap: break-word;
@@ -324,15 +328,15 @@
 
 
 body {
-    padding-bottom: 60px;
+    padding-bottom: 40px;
 }
 
 .navigation-buttons {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 .home-btn {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 @media (max-width: 768px) {
@@ -341,11 +345,11 @@ body {
     }
     
     body {
-        padding-bottom: initial;
+        padding-bottom: 20px;
     }
     
     .navigation-buttons, .home-btn {
-        margin-bottom: initial;
+        margin-bottom: 10px;
     }
 }
 

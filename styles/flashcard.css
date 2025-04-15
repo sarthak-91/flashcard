@@ -73,7 +73,7 @@
     font-weight: 500;
     text-transform: capitalize;
     font-size: 0.8rem;
-    min-width: 60px; /* Ensure consistent width */
+    min-width: 60px; 
     text-align: center;
 }
 
@@ -95,6 +95,12 @@
     background-color: #9c27b0; 
     color: white;
 }
+
+.difficulty-badge.magoosh {
+    background-color: #1d68a1; 
+    color: white;
+}
+
 .card-content {
     text-align: center;
     word-wrap: break-word;

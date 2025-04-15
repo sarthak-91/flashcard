@@ -69,6 +69,18 @@
                         <input type="text" id="wildcardEnd" maxlength="1" size="1" placeholder="z">
                     </div>
                 </div>
+                <div class="difficulty-row">
+                    <div class="difficulty-header">
+                        <input type="checkbox" id="magoosh" value="Magoosh" onchange="toggleRange('magoosh')">
+                        <label for="magoosh">Magoosh</label>
+                    </div>
+                    <div id="magooshRange" class="range-inputs hidden">
+                        <span>Range:</span>
+                        <input type="text" id="magooshStart" maxlength="1" size="1" placeholder="a">
+                        <span>to</span>
+                        <input type="text" id="magooshEnd" maxlength="1" size="1" placeholder="z">
+                    </div>
+                </div>
             </div>
             <button id="start-btn" class="start-btn">Start Flashcards</button>
         </div>
@@ -163,7 +175,7 @@
             document.getElementById(`${difficulty}Range`).classList.toggle('hidden', !document.getElementById(difficulty).checked);
         }
 
-        ['easy', 'medium', 'hard', 'wildcard'].forEach(diff => {
+        ['easy', 'medium', 'hard', 'wildcard','magoosh'].forEach(diff => {
             document.getElementById(diff).addEventListener('change', () => toggleRange(diff));
         });
 
@@ -173,7 +185,7 @@
             const startLetters = {};
             const endLetters = {};
             
-            ['easy', 'medium', 'hard','wildcard'].forEach(diff => {
+            ['easy', 'medium', 'hard','wildcard','magoosh'].forEach(diff => {
                 if (document.getElementById(diff).checked) {
                     const difficulty = diff.charAt(0).toUpperCase() + diff.slice(1);
                     selectedDifficulties.push(difficulty);
